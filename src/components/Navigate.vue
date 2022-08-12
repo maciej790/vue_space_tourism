@@ -8,52 +8,58 @@
       alt="hamburger"
       @click="isOpen = true"
     />
-    <ul :class="[{ open: isOpen }, 'menu']">
+    <ul class="menu" :class="{ open: isOpen }">
       <img
         class="menu-close"
         src="@/assets/shared/icon-close.svg"
         alt="close"
         @click="isOpen = !isOpen"
       />
-      <router-link
-        v-for="item in menuOptions"
-        :key="item.number"
-        :to="item.link"
-        tag="li"
-        class="menu-item"
-        @click="isOpen = false"
-      >
-        <span class="menu-bold">{{ item.number }}</span>
-        {{ item.option }}
-      </router-link>
+      <li v-for="item in menuOptions" :key="item.number">
+        <router-link :to="item.link" class="menu-item" @click="isOpen = false">
+          <span class="menu-bold">{{ item.number }}</span>
+          {{ item.option }}
+        </router-link>
+      </li>
     </ul>
   </nav>
 </template>
-<script setup>
+<script>
 import { ref } from "vue";
-const isOpen = ref(false);
-const menuOptions = ref([
-  {
-    number: "00",
-    link: "/",
-    option: "Home",
+export default {
+  name: "Navigate",
+
+  setup() {
+    const isOpen = ref(false);
+    const menuOptions = [
+      {
+        number: "00",
+        link: "/",
+        option: "Home",
+      },
+      {
+        number: "01",
+        link: "/Destination",
+        option: "Destination",
+      },
+      {
+        number: "02",
+        link: "/Crew",
+        option: "Crew",
+      },
+      {
+        number: "03",
+        link: "/Technology",
+        option: "Technology",
+      },
+    ];
+
+    return {
+      isOpen,
+      menuOptions,
+    };
   },
-  {
-    number: "01",
-    link: "/Destination",
-    option: "Destination",
-  },
-  {
-    number: "02",
-    link: "/Crew",
-    option: "Crew",
-  },
-  {
-    number: "03",
-    link: "/Technology",
-    option: "Technology",
-  },
-]);
+};
 </script>
 <style lang="scss">
 @import "../style/variables";
